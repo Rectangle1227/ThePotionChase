@@ -1,36 +1,36 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Interactable : MonoBehaviour
 {
-    public string objName; //ª«¥ó¦WºÙ
-    public string prompt; //¤¬°Ê´£¥Ü
-    public Transform interactTransform; //¤¬°Ê¦ì¸m¡A§â·Q­n¤¬°Êªºª«¥ó©Ô¨ì³o¸Ì
-    public Text nameText; //§â¦r©Ô¶i¨Ó
-    public Text hintText; //´£¥Ü¤å¦r
-    public Image pressF;  //«ö¶s¹Ï¤ù
-    protected Vector3 offset = new Vector3(0f, 2f, 0f); // UI¤¸¯À¦bÀY³»¤Wªº°¾²¾­È
-    protected Vector3 moreHigh = new Vector3(0f, 80f, 0f); //§ó°ª
-    protected Vector3 moreMoreHigh = new Vector3(0f, 125f, 0f); //§ó§ó°ª
+    public string objName; //ç‰©ä»¶åç¨±
+    public string prompt; //äº’å‹•æç¤º
+    public Transform interactTransform; //äº’å‹•ä½ç½®ï¼ŒæŠŠæƒ³è¦äº’å‹•çš„ç‰©ä»¶æ‹‰åˆ°é€™è£¡
+    public Text nameText; //æŠŠå­—æ‹‰é€²ä¾†
+    public Text hintText; //æç¤ºæ–‡å­—
+    public Image pressF;  //æŒ‰éˆ•åœ–ç‰‡
+    protected Vector3 offset = new Vector3(0f, 2f, 0f); // UIå…ƒç´ åœ¨é ­é ‚ä¸Šçš„åç§»å€¼
+    protected Vector3 moreHigh = new Vector3(0f, 80f, 0f); //æ›´é«˜
+    protected Vector3 moreMoreHigh = new Vector3(0f, 125f, 0f); //æ›´æ›´é«˜
     protected Camera mainCamera;
     public Transform player;
 
     protected bool isInRange;
     protected bool isTriggered;
-    private bool isTurning = false; // ·s¼W¤@­Ó¼Ğ»x¦ì¡Aªí¥Ü¬O§_¥¿¦b¶i¦æÂà¦V
+    private bool isTurning = false; // æ–°å¢ä¸€å€‹æ¨™èªŒä½ï¼Œè¡¨ç¤ºæ˜¯å¦æ­£åœ¨é€²è¡Œè½‰å‘
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         mainCamera = Camera.main;
-        isTriggered = false; //ªì©l¤Æ
+        isTriggered = false; //åˆå§‹åŒ–
         isInRange = false;
-        nameText.gameObject.SetActive(false); //ÁôÂÃ¥H¤UUI¤¸¯À
+        nameText.gameObject.SetActive(false); //éš±è—ä»¥ä¸‹UIå…ƒç´ 
         hintText.gameObject.SetActive(false);
         pressF.gameObject.SetActive(false);
-        player = GameObject.FindGameObjectWithTag("Player").transform; //§ä´Mª±®aª«¥ó
+        player = GameObject.FindGameObjectWithTag("Player").transform; //æ‰¾å°‹ç©å®¶ç‰©ä»¶
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -57,21 +57,21 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        // ±Nª«¥óªº¥@¬ÉªÅ¶¡¦ì¸mÂà´«¬°«Ì¹õªÅ¶¡¦ì¸m
+        // å°‡ç‰©ä»¶çš„ä¸–ç•Œç©ºé–“ä½ç½®è½‰æ›ç‚ºå±å¹•ç©ºé–“ä½ç½®
         Vector3 npcScrPos = mainCamera.WorldToScreenPoint(interactTransform.position + offset);
         nameText.text = $"<color=#FFD700>{objName}</color>\n";
         hintText.text = prompt;
 
-        // ±NUI¤¸¯Àªº¦ì¸m³]¸m¬°¿Ã¹õªÅ¶¡¦ì¸m
+        // å°‡UIå…ƒç´ çš„ä½ç½®è¨­ç½®ç‚ºè¢å¹•ç©ºé–“ä½ç½®
         nameText.transform.position = npcScrPos;
         pressF.transform.position = npcScrPos + moreHigh;
         hintText.transform.position = npcScrPos + moreMoreHigh;
 
-        //§PÂ_¬O§_¶}©l¤¬°Ê
+        //åˆ¤æ–·æ˜¯å¦é–‹å§‹äº’å‹•
         if (isInRange == true && Input.GetKeyDown(KeyCode.F))
         {
-            isTriggered = !isTriggered; //Ä~©Ó¸}¥»¥i¥H¥Î³o­ÓÅÜ¼Æ¥h°µÃB¥~ªº§PÂ_°õ¦æ
-                                        //¨Ò¡Gif (isTriggered) { §A·Q­nÅı¥¦°µªº¨Æ±¡ }
+            isTriggered = !isTriggered; //ç¹¼æ‰¿è…³æœ¬å¯ä»¥ç”¨é€™å€‹è®Šæ•¸å»åšé¡å¤–çš„åˆ¤æ–·åŸ·è¡Œ
+                                        //ä¾‹ï¼šif (isTriggered) { ä½ æƒ³è¦è®“å®ƒåšçš„äº‹æƒ… }
             if (!isTurning)
             {
                 StartCoroutine(TurnTowardsPlayer());
@@ -83,20 +83,20 @@ public class Interactable : MonoBehaviour
     {
         isTurning = true;
 
-        // ¥ı­pºâ¥Ø¼Ğ¤è¦V
+        // å…ˆè¨ˆç®—ç›®æ¨™æ–¹å‘
         Vector3 directionToPlayer = player.position - transform.position;
         directionToPlayer.y = 0f;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
-        // ¶i¦æ¥­·Æ±ÛÂà
+        // é€²è¡Œå¹³æ»‘æ—‹è½‰
         while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5.0f * Time.deltaTime);
             yield return null;
         }
 
-        // Âà¦V§¹¦¨«á³]¸m isInRange ¬° false
+        // è½‰å‘å®Œæˆå¾Œè¨­ç½® isInRange ç‚º false
 
         isTurning = false;
     }
